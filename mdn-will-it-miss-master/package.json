@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "parcel serve src/index.html",
+    "production": "npx parcel build src/index.html",
     "build": "npm run test && parcel build src/index.html",
     "test": "node tests/*.js"
   },
