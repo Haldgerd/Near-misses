@@ -7,15 +7,13 @@ import Orbital from './Orbital';
 function getDate(d = new Date()) {
   return d.toJSON().split('T')[0];
 }
-
 const fetchData = () =>
   fetch(
     `https://api.nasa.gov/neo/rest/v1/feed?start_date=${getDate()}&api_key=DEMO_KEY`
   ).then((res) => res.json());
 
 export default function App() {
-  const data = useAsync(fetchData, []);
-
+  data = useAsync(fetchData, []);
   if (data.loading) {
     document.title = 'Counting potential earth HAZARDS…';
 
@@ -26,8 +24,8 @@ export default function App() {
       </p>
     );
   }
-
   const day = getDate(addDays(new Date(), 1));
+
   const hazards = data.result.near_earth_objects[day].reduce((acc, curr) => {
     if (curr.is_potentially_hazardous_asteroid) {
       return acc + 1;
@@ -35,14 +33,14 @@ export default function App() {
     return acc;
   }, 0);
 
-  document.title = `${hazards} potential HAZARDS ${hazards > 0 ? '😱' : '👍'}`;
+  document.title = `{hazards} potential HAZARDS ${hazards > 0 ? '😱' : '👍'}`;
 
   const results = data.result.near_earth_objects[day];
   return (
     <div>
       <p>
         {format(addDays(new Date(), 1), 'EEEE d-MMM')} there will be{' '}
-        <strong>{results.length}</strong> near misses
+        <strong>{results.length}</strong> flying super pigs!
       </p>
       <hr></hr>
       {results
